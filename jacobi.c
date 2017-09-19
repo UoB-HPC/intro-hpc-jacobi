@@ -12,6 +12,8 @@ static int N;
 static int MAX_ITERATIONS;
 static double CONVERGENCE_THRESHOLD;
 
+#define SEPARATOR "------------------------------------\n"
+
 // Return the current time in seconds since the Epoch
 double get_timestamp();
 
@@ -72,6 +74,12 @@ int main(int argc, char *argv[])
   double *x    = malloc(N*sizeof(double));
   double *xtmp = malloc(N*sizeof(double));
 
+  printf(SEPARATOR);
+  printf("Matrix size:            %dx%d\n", N, N);
+  printf("Maximum iterations:     %d\n", MAX_ITERATIONS);
+  printf("Convergence threshold:  %lf\n", CONVERGENCE_THRESHOLD);
+  printf(SEPARATOR);
+
   // Initialize data
   srand(0);
   for (int row = 0; row < N; row++)
@@ -107,8 +115,9 @@ int main(int argc, char *argv[])
   }
   err = sqrt(err);
   printf("Final error = %lf\n", err);
-  printf("Iterations performed = %d\n", itr);
-  printf("Runtime = %lf seconds\n", (end-start));
+  printf("Iterations  = %d\n", itr);
+  printf("Runtime     = %lf seconds\n", (end-start));
+  printf(SEPARATOR);
 
   free(A);
   free(b);
