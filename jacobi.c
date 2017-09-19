@@ -5,9 +5,13 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
-#define N 16
+#define N 1024
 #define CONVERGENCE_THRESHOLD 0.001
+
+// Return the current time in seconds since the Epoch
+double get_timestamp();
 
 int main(int argc, char *argv[])
 {
@@ -35,7 +39,9 @@ int main(int argc, char *argv[])
   }
 
   // Run Jacobi solver
-  for (int itr = 0; itr < 100; itr++)
+  int itr;
+  double start = get_timestamp();
+  for (itr = 0; itr < 100; itr++)
   {
     // Perfom Jacobi iteration
     for (int row = 0; row < N; row++)
@@ -62,8 +68,12 @@ int main(int argc, char *argv[])
       sqdiff += tmp * tmp;
     }
     if (sqrt(sqdiff) < CONVERGENCE_THRESHOLD)
+    {
+      itr++;
       break;
+    }
   }
+  double end = get_timestamp();
 
   // Check error of final solution
   double err = 0.0;
@@ -79,7 +89,8 @@ int main(int argc, char *argv[])
   }
   err = sqrt(err);
   printf("Final error = %lf\n", err);
-  // TODO: Print timing information and number of iterations
+  printf("Iterations performed = %d\n", itr);
+  printf("Runtime = %lf seconds\n", (end-start));
 
   free(A);
   free(b);
@@ -87,4 +98,11 @@ int main(int argc, char *argv[])
   free(xtmp);
 
   return 0;
+}
+
+double get_timestamp()
+{
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return tv.tv_sec + tv.tv_usec*1e-6;
 }
