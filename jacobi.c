@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #define N 16
+#define CONVERGENCE_THRESHOLD 0.001
 
 int main(int argc, char *argv[])
 {
@@ -34,8 +35,9 @@ int main(int argc, char *argv[])
   }
 
   // Run Jacobi solver
-  for (int itr = 0; itr < 10; itr++)
+  for (int itr = 0; itr < 100; itr++)
   {
+    // Perfom Jacobi iteration
     for (int row = 0; row < N; row++)
     {
       double tmp = 0.0;
@@ -47,12 +49,20 @@ int main(int argc, char *argv[])
       xtmp[row] = (b[row] - tmp) / A[row + row*N];
     }
 
-    // TODO: Convergence check
-
     // Swap pointers
     double *tmpptr = x;
     x = xtmp;
     xtmp = tmpptr;
+
+    // Check for convergence
+    double sqdiff = 0.0;
+    for (int i = 0; i < N; i++)
+    {
+      double tmp = xtmp[i] - x[i];
+      sqdiff += tmp * tmp;
+    }
+    if (sqrt(sqdiff) < CONVERGENCE_THRESHOLD)
+      break;
   }
 
   // Check error of final solution
