@@ -18,6 +18,51 @@ double get_timestamp();
 // Parse command line arguments to set solver parameters
 void parse_arguments(int argc, char *argv[]);
 
+// Run the Jacobi solver
+// Returns the number of iterations performed
+int run(double *A, double *b, double *x, double *xtmp)
+{
+  int row, col;
+  double dot;
+  double diff;
+  double sqdiff;
+  double *ptrtmp;
+
+  for (int itr = 0; itr < MAX_ITERATIONS; itr++)
+  {
+    // Perfom Jacobi iteration
+    for (row = 0; row < N; row++)
+    {
+      dot = 0.0;
+      for (col = 0; col < N; col++)
+      {
+        if (row != col)
+          dot += A[row + col*N] * x[col];
+      }
+      xtmp[row] = (b[row] - dot) / A[row + row*N];
+    }
+
+    // Swap pointers
+    ptrtmp = x;
+    x      = xtmp;
+    xtmp   = ptrtmp;
+
+    // Check for convergence
+    sqdiff = 0.0;
+    for (row = 0; row < N; row++)
+    {
+      diff    = xtmp[row] - x[row];
+      sqdiff += diff * diff;
+    }
+    if (sqrt(sqdiff) < CONVERGENCE_THRESHOLD)
+    {
+      return itr+1;
+    }
+  }
+
+  return MAX_ITERATIONS;
+}
+
 int main(int argc, char *argv[])
 {
   parse_arguments(argc, argv);
@@ -44,40 +89,8 @@ int main(int argc, char *argv[])
   }
 
   // Run Jacobi solver
-  int itr;
   double start = get_timestamp();
-  for (itr = 0; itr < MAX_ITERATIONS; itr++)
-  {
-    // Perfom Jacobi iteration
-    for (int row = 0; row < N; row++)
-    {
-      double tmp = 0.0;
-      for (int col = 0; col < N; col++)
-      {
-        if (row != col)
-          tmp += A[row + col*N] * x[col];
-      }
-      xtmp[row] = (b[row] - tmp) / A[row + row*N];
-    }
-
-    // Swap pointers
-    double *tmpptr = x;
-    x = xtmp;
-    xtmp = tmpptr;
-
-    // Check for convergence
-    double sqdiff = 0.0;
-    for (int i = 0; i < N; i++)
-    {
-      double tmp = xtmp[i] - x[i];
-      sqdiff += tmp * tmp;
-    }
-    if (sqrt(sqdiff) < CONVERGENCE_THRESHOLD)
-    {
-      itr++;
-      break;
-    }
-  }
+  int itr = run(A, b, x, xtmp);
   double end = get_timestamp();
 
   // Check error of final solution
