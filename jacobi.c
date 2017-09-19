@@ -1,5 +1,21 @@
 //
-// TODO: General description here
+// Implementation of the iterative Jacobi method.
+//
+// Given a known, diagonally dominant matrix A and a known vector b, we aim to
+// to find the vector x that satisfies the following equation:
+//
+//     Ax = b
+//
+// We first split the matrix A into the diagonal D and the remainder R:
+//
+//     (D + R)x = b
+//
+// We then rearrange to form an iterative solution:
+//
+//     x = (b - Rx) / D
+//
+// More information:
+// -> https://en.wikipedia.org/wiki/Jacobi_method
 //
 
 #include <math.h>
