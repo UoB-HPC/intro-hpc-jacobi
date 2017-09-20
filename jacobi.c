@@ -138,8 +138,8 @@ int main(int argc, char *argv[])
 
   printf("Solution error = %lf\n", err);
   printf("Iterations     = %d\n", itr);
-  printf("Total runtime  = %lf seconds\n", (solve_end-solve_start));
-  printf("Solver runtime = %lf seconds\n", (total_end-total_start));
+  printf("Total runtime  = %lf seconds\n", (total_end-total_start));
+  printf("Solver runtime = %lf seconds\n", (solve_end-solve_start));
   if (itr == MAX_ITERATIONS)
     printf("WARNING: solution did not converge\n");
   printf(SEPARATOR);
