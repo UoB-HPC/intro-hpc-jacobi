@@ -177,7 +177,7 @@ double parse_double(const char *str)
 void parse_arguments(int argc, char *argv[])
 {
   // Set default values
-  N = 1024;
+  N = 1000;
   MAX_ITERATIONS = 20000;
   CONVERGENCE_THRESHOLD = 0.0001;
   SEED = 0;
