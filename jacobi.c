@@ -131,9 +131,9 @@ int main(int argc, char *argv[])
     err += tmp*tmp;
   }
   err = sqrt(err);
-  printf("Final error = %lf\n", err);
-  printf("Iterations  = %d\n", itr);
-  printf("Runtime     = %lf seconds\n", (end-start));
+  printf("Solution error = %lf\n", err);
+  printf("Iterations     = %d\n", itr);
+  printf("Runtime        = %lf seconds\n", (end-start));
   if (itr == MAX_ITERATIONS)
     printf("WARNING: solution did not converge\n");
   printf(SEPARATOR);
