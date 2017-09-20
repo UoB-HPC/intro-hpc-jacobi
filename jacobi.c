@@ -12,7 +12,7 @@
 //
 // We then rearrange to form an iterative solution:
 //
-//     x = (b - Rx) / D
+//     x' = (b - Rx) / D
 //
 // More information:
 // -> https://en.wikipedia.org/wiki/Jacobi_method
