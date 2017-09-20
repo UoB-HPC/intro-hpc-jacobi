@@ -26,6 +26,7 @@
 
 static int N;
 static int MAX_ITERATIONS;
+static int SEED;
 static double CONVERGENCE_THRESHOLD;
 
 #define SEPARATOR "------------------------------------\n"
@@ -97,7 +98,7 @@ int main(int argc, char *argv[])
   printf(SEPARATOR);
 
   // Initialize data
-  srand(0);
+  srand(SEED);
   for (int row = 0; row < N; row++)
   {
     double rowsum = 0.0;
@@ -170,6 +171,7 @@ void parse_arguments(int argc, char *argv[])
   N = 1024;
   MAX_ITERATIONS = 100;
   CONVERGENCE_THRESHOLD = 0.0001;
+  SEED = 0;
 
   for (int i = 1; i < argc; i++)
   {
@@ -197,6 +199,14 @@ void parse_arguments(int argc, char *argv[])
         exit(1);
       }
     }
+    else if (!strcmp(argv[i], "--seed") || !strcmp(argv[i], "-s"))
+    {
+      if (++i >= argc || (SEED = parse_int(argv[i])) < 0)
+      {
+        printf("Invalid seed\n");
+        exit(1);
+      }
+    }
     else if (!strcmp(argv[i], "--help") || !strcmp(argv[i], "-h"))
     {
       printf("\n");
@@ -206,6 +216,7 @@ void parse_arguments(int argc, char *argv[])
       printf("  -c  --convergence  C     Set convergence threshold\n");
       printf("  -i  --iterations   I     Set maximum number of iterations\n");
       printf("  -n  --norder       N     Set maxtrix order\n");
+      printf("  -s  --seed         S     Set random number seed\n");
       printf("\n");
       exit(0);
     }
