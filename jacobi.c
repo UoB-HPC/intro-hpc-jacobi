@@ -177,7 +177,7 @@ void parse_arguments(int argc, char *argv[])
 {
   // Set default values
   N = 1024;
-  MAX_ITERATIONS = 10000;
+  MAX_ITERATIONS = 20000;
   CONVERGENCE_THRESHOLD = 0.0001;
   SEED = 0;
 
