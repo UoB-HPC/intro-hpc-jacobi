@@ -41,13 +41,16 @@ void parse_arguments(int argc, char *argv[]);
 // Returns the number of iterations performed
 int run(double *A, double *b, double *x, double *xtmp)
 {
+  int itr;
   int row, col;
   double dot;
   double diff;
   double sqdiff;
   double *ptrtmp;
 
-  for (int itr = 0; itr < MAX_ITERATIONS; itr++)
+  // Loop until converged or maximum iterations reached
+  itr = 0;
+  do
   {
     // Perfom Jacobi iteration
     for (row = 0; row < N; row++)
@@ -73,13 +76,11 @@ int run(double *A, double *b, double *x, double *xtmp)
       diff    = xtmp[row] - x[row];
       sqdiff += diff * diff;
     }
-    if (sqrt(sqdiff) < CONVERGENCE_THRESHOLD)
-    {
-      return itr+1;
-    }
-  }
 
-  return MAX_ITERATIONS;
+    itr++;
+  } while ((itr < MAX_ITERATIONS) && (sqrt(sqdiff) > CONVERGENCE_THRESHOLD));
+
+  return itr;
 }
 
 int main(int argc, char *argv[])
