@@ -26,6 +26,6 @@ Here are the runtimes that we achieve with the starting code for a few different
 | Matrix size | Solver runtime | Iterations | Solution error |
 | ----------- | -------------- | ---------- | -------------- | 
 |     500     |  1.48 seconds  |    1465    |    0.02495     |
-|    1000     |  10.9 seconds  |    3031    |    0.05005     |
+|    1000     |  10.9 seconds  |    2957    |    0.05005     |
 |    2000     |   130 seconds  |    5479    |    0.09998     |
 |    4000     |  1116 seconds  |   10040    |    0.1999      |
