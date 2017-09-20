@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
   printf("Convergence threshold:  %lf\n", CONVERGENCE_THRESHOLD);
   printf(SEPARATOR);
 
+  double total_start = get_timestamp();
+
   // Initialize data
   srand(SEED);
   for (int row = 0; row < N; row++)
@@ -114,9 +116,9 @@ int main(int argc, char *argv[])
   }
 
   // Run Jacobi solver
-  double start = get_timestamp();
+  double solve_start = get_timestamp();
   int itr = run(A, b, x, xtmp);
-  double end = get_timestamp();
+  double solve_end = get_timestamp();
 
   // Check error of final solution
   double err = 0.0;
@@ -131,9 +133,13 @@ int main(int argc, char *argv[])
     err += tmp*tmp;
   }
   err = sqrt(err);
+
+  double total_end = get_timestamp();
+
   printf("Solution error = %lf\n", err);
   printf("Iterations     = %d\n", itr);
-  printf("Runtime        = %lf seconds\n", (end-start));
+  printf("Total runtime  = %lf seconds\n", (solve_end-solve_start));
+  printf("Solver runtime = %lf seconds\n", (total_end-total_start));
   if (itr == MAX_ITERATIONS)
     printf("WARNING: solution did not converge\n");
   printf(SEPARATOR);
